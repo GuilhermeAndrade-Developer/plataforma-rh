@@ -41,4 +41,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function levels()
+    {
+        return $this->belongsToMany(Level::class, 'user_levels')->withPivot('progress');
+    }
 }

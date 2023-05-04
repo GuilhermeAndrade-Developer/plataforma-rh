@@ -12,7 +12,17 @@ export default function Register() {
         email: '',
         password: '',
         password_confirmation: '',
+        level_id: '',
     });
+
+    const levels = [
+        { id: 8, name: 'Gerente' },
+        { id: 9, name: 'Usuário' },
+    ];
+
+    const handleChange = e => {
+        setData(e.target.name, e.target.value);
+    };
 
     useEffect(() => {
         return () => {
@@ -98,6 +108,32 @@ export default function Register() {
 
                     <InputError message={errors.password_confirmation} className="mt-2" />
                 </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="level_id" value="User Level" />
+
+                    <div className="mt-1 relative rounded-md shadow-sm">
+                        <select
+                            id="level_id"
+                            name="level_id"
+                            value={data.level_id}
+                            className={`block w-full pr-10 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md ${errors.level_id ? 'border-red-500' : 'border-gray-300'}`}
+                            onChange={(e) => setData('level_id', e.target.value)}
+                            required
+                        >
+                            <option value="">Select a level</option>
+                            <option value="7">Administrador</option>
+                            {levels.map((level) => (
+                                <option key={level.id} value={level.id}>
+                                    {level.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <InputError message={errors.level_id} className="mt-2" />
+                </div>
+
 
                 <div className="flex items-center justify-end mt-4">
                     <Link
