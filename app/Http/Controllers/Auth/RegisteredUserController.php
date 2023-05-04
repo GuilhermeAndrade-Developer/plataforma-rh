@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\UserLevel;
+use App\Models\Level;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -22,7 +22,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        $levels = UserLevel::all();
+        $levels = Level::all();
         return Inertia::render('Auth/Register', [
             'levels' => $levels
         ]);
@@ -46,8 +46,9 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'level_id' => $request->level_id,
         ]);
+
+        $user->levels()->attach($request->level_id);
 
         event(new Registered($user));
 

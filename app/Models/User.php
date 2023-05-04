@@ -42,7 +42,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function level() {
-        return $this->belongsTo(UserLevel::class);
+    public function levels()
+    {
+        return $this->belongsToMany(Level::class, 'user_levels')->withPivot('progress');
     }
 }
